@@ -29,10 +29,13 @@ def symlink(target, link_name, force=False):
     return _symlink_force(target, link_name)
   return os.symlink(target, link_name)
 
-def copytree(src, dst, symlinks=False, ignore=None):
+def copytree(src, dst, prefix=None, symlinks=False, ignore=None):
   for item in os.listdir(src):
     s = os.path.join(src, item)
-    d = os.path.join(dst, item)
+    if prefix:
+      d = os.path.join(dst, prefix + item)
+    else:
+      d = os.path.join(dst, item)
     if os.path.isdir(s):
       shutil.copytree(s, d, symlinks, ignore)
     else:

@@ -3,18 +3,7 @@
 
 import os
 import shutil
-
-def copytree(src, dst, prefix=None, symlinks=False, ignore=None):
-  for item in os.listdir(src):
-    s = os.path.join(src, item)
-    if prefix:
-      d = os.path.join(dst, prefix + item)
-    else:
-      d = os.path.join(dst, item)
-    if os.path.isdir(s):
-      shutil.copytree(s, d, symlinks, ignore)
-    else:
-      shutil.copy2(s, d)
+from local.native import fs
 
 def find_fuzzer_type(fuzzer_name):
   fuzzer_name = fuzzer_name.lower()
@@ -36,7 +25,7 @@ corpus_uploaders = {
 
 def libfuzzer_get_fuzzer_corpus_bucket(args, ctrl, fuzzer_name):
   corpus_path = ctrl.get_gcs_corpus_bucket(fuzzer_name)
-  copytree(args.corpus, corpus_path, prefix='user-')
+  fs.copytree(args.corpus, corpus_path, prefix='user-')
 
 def execute(args):
   """upload corpus to specific fuzzer."""
@@ -49,4 +38,3 @@ def execute(args):
     raise TypeError("fuzzer_type not found in args.fuzzer_name. it must be the substring of args.fuzzer_name")
   corpus_uploader_control = corpus_uploaders[fuzzer_type](args)
   libfuzzer_get_fuzzer_corpus_bucket(args, corpus_uploader_control, args.fuzzer_name)
-  pass
