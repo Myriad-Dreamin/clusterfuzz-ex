@@ -12,7 +12,6 @@ reset_color = '\033[0;0m'
 
 def libfuzzer_read_from_fuzzer_corpus_bucket(args, ctrl, fuzzer_name):
   corpus_path = ctrl.get_gcs_corpus_bucket(fuzzer_name)
-#   fs.copytree(args.corpus, corpus_path, prefix='user-')
   corpus_all = os.listdir(corpus_path)
   total_num = len(corpus_all)
   regex_test = lambda _: True
@@ -35,11 +34,7 @@ def libfuzzer_read_from_fuzzer_corpus_bucket(args, ctrl, fuzzer_name):
     print(f"{len(matched)} of {total_num} corpus matched")
 
 def execute(args):
-  """upload corpus to specific fuzzer."""
-  # validate_fuzzer = None
-  # if args.validate_fuzzer:
-  #   validate_fuzzer = os.abspath(args.validate_fuzzer)
-  # print('validate_fuzzer', args.validate_fuzzer)
+  """read corpus from specific fuzzer."""
   local_gcs_buckets_path = os.path.abspath(
       os.path.join(args.server_storage_path, 'local_gcs'))
   os.environ['LOCAL_GCS_BUCKETS_PATH'] = local_gcs_buckets_path
