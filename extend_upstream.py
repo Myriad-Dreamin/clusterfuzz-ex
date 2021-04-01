@@ -36,3 +36,7 @@ if __name__ == '__main__':
   local_native_core_dir = abs_join(local_clusterfuzz_root_dir, "src/local/native/core")
   core_dir = abs_join(clusterfuzz_root_dir, "src/local/native")
   fs.symlink(local_native_core_dir, core_dir, force=True)
+
+  # local_native_patch_dir = abs_join(local_clusterfuzz_root_dir, "src/local/native/patch")
+  # patch_dir = abs_join(clusterfuzz_root_dir, "src/local/native/patch")
+  # fs.symlink(local_native_patch_dir, patch_dir, force=True)
